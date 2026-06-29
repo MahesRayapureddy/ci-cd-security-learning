@@ -8,3 +8,4 @@ This is Conflict Feature
 This is Main Update Before Rebase
 This is Stash Practice
 This is Rebase Feature
+This is Reset Practice
