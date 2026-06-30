@@ -1,28 +1,29 @@
 pipeline {
     agent any
 
+    tools {
+        sonarQube 'SonarScanner'
+    }
+
     stages {
+
         stage('Checkout') {
             steps {
-                echo 'Checking out source code...'
+                checkout scm
             }
         }
 
         stage('Build') {
             steps {
-                echo 'Build Successful!'
+                echo 'Building Project...'
             }
         }
 
-        stage('Test') {
+        stage('SonarQube Analysis') {
             steps {
-                echo 'Running Tests...'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deployment Completed!'
+                withSonarQubeEnv('SonarQube') {
+                    bat 'sonar-scanner -Dsonar.projectKey=ci-cd-security-learning -Dsonar.sources=.'
+                }
             }
         }
     }
