@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        sonarQube 'SonarScanner'
-    }
-
     stages {
 
         stage('Checkout') {
@@ -22,7 +18,10 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    bat 'sonar-scanner -Dsonar.projectKey=ci-cd-security-learning -Dsonar.sources=.'
+                    script {
+                        def scannerHome = tool 'SonarScanner'
+                        bat "${scannerHome}\\bin\\sonar-scanner.bat -Dsonar.projectKey=ci-cd-security-learning -Dsonar.sources=."
+                    }
                 }
             }
         }
