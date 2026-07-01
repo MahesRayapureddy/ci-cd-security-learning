@@ -25,5 +25,11 @@ pipeline {
                 }
             }
         }
+
+        stage('Docker Build') {
+            steps {
+                bat 'docker build -t ci-cd-security-learning .'
+            }
+        }
     }
 }
